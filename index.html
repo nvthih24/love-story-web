@@ -102,15 +102,20 @@
         };
 
         btnAccept.addEventListener('click', () => {
-            // 1. Ẩn giao diện cũ
+
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(error => {
+                console.log("Lỗi autoplay (nếu có):", error);
+            });
+            // Ẩn giao diện cũ
             document.getElementById('character-container').style.display = 'none';
             document.getElementById('dialogue-box').style.display = 'none';
 
-            // 2. Hiện khung chứa trái tim
+            // Hiện khung chứa trái tim
             const heartWrapper = document.getElementById('heart-wrapper');
             heartWrapper.style.display = 'block';
 
-            // 3. Nạp lần lượt các file JS của hiệu ứng trái tim
+            // Nạp lần lượt các file JS của hiệu ứng trái tim
             // Lưu ý: Phải nạp đúng thứ tự
             loadScript('js/universe.js') // Hiệu ứng sao
                 .then(() => loadScript('js/particle.js')) // Hiệu ứng trái tim chính
@@ -198,7 +203,7 @@
                 </div>
             </div>
             <div class="corner bottom-right">
-                <a href="https://m.me/username-cua-crush" target="_blank" class="msg-btn">
+                <a href="https://m.me/hoang.khang.544656" target="_blank" class="msg-btn">
                     💌 Gửi lời nhắn
                 </a>
             </div>
