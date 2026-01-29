@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    </link>
+</head>
+
+<div id="heart-container">
+    <div class="css-heart"></div>
+</div>
+
+<body>
+
+    <div id="character-container">
+        <video id="character" muted loop>
+            <source src="nhanvat_noi.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ thẻ video.
+        </video>
+    </div>
+
+    <div id="dialogue-box">
+        <div id="text"></div>
+        <div class="controls">
+            <button id="btn-next">Tiếp tục</button>
+            <button id="btn-decline">Từ chối</button>
+            <button id="btn-accept">Đồng ý</button>
+        </div>
+    </div>
+
+    <script>
+        // Giữ nguyên Logic cũ của bạn
+        const dialogues = [
+            "Chào bạn! Rất vui vì bạn đã thay đổi bố cục giao diện.",
+            "Chúng ta đang tiến triển rất tốt với kế hoạch 4 ngày.",
+            "Tôi đã học thêm được nhiều kỹ năng mới để hỗ trợ ông.",
+            "Bây giờ, tôi có một đề nghị quan trọng dành cho ông.",
+            "Ông có sẵn sàng cùng tôi hoàn thiện dự án này ngay bây giờ không?"
+        ];
+
+        let currentStep = 0;
+        const textElement = document.getElementById('text');
+        const character = document.getElementById('character');
+        const btnNext = document.getElementById('btn-next');
+        const btnAccept = document.getElementById('btn-accept');
+        const btnDecline = document.getElementById('btn-decline');
+        const typeSound = new Audio('path/to/type-sound.mp3'); // Tiếng tíc tíc ngắn
+        const bgm = new Audio('path/to/background-music.mp3');
+        bgm.loop = true;
+        const characterContainer = document.getElementById('character-container');
+        const dialogueBox = document.getElementById('dialogue-box');
+        const heartContainer = document.getElementById('heart-container');
+
+        function typeWriter(text, index = 0) {
+            if (index === 0) {
+                textElement.innerHTML = "";
+                character.play();
+                hideButtons();
+                bgm.play().catch(e => console.log("Cần tương tác để phát nhạc"));
+            }
+
+            if (index < text.length) {
+                textElement.innerHTML += text.charAt(index);
+                // Phát tiếng gõ chữ (tùy chọn)
+                if (typeSound.paused) {
+                    typeSound.currentTime = 0;
+                    typeSound.play();
+                }
+                setTimeout(() => typeWriter(text, index + 1), 40);
+            } else {
+                character.pause(); // Dừng video khi chữ chạy xong
+                character.currentTime = 0; // Quay về frame đầu tiên của video (miệng đóng)
+                showButtons();
+            }
+        }
+
+        function hideButtons() {
+            btnNext.style.display = 'none';
+            btnAccept.style.display = 'none';
+            btnDecline.style.display = 'none';
+        }
+
+        function showButtons() {
+            if (currentStep < dialogues.length - 1) {
+                btnNext.style.display = 'block';
+            } else {
+                btnAccept.style.display = 'block';
+                btnDecline.style.display = 'block';
+            }
+        }
+
+        btnNext.addEventListener('click', () => {
+            currentStep++;
+            typeWriter(dialogues[currentStep]);
+        });
+
+        window.onload = () => {
+            typeWriter(dialogues[currentStep]);
+        };
+
+        btnAccept.addEventListener('click', () => {
+            // 1. Ẩn giao diện cũ
+            document.getElementById('character-container').style.display = 'none';
+            document.getElementById('dialogue-box').style.display = 'none';
+
+            // 2. Hiện khung chứa trái tim
+            const heartWrapper = document.getElementById('heart-wrapper');
+            heartWrapper.style.display = 'block';
+
+            // 3. Nạp lần lượt các file JS của hiệu ứng trái tim
+            // Lưu ý: Phải nạp đúng thứ tự
+            loadScript('js/universe.js') // Hiệu ứng sao
+                .then(() => loadScript('js/particle.js')) // Hiệu ứng trái tim chính
+                .then(() => loadScript('js/main.js')) // Hiệu ứng hạt bay thêm
+                .then(() => {
+                    console.log("Heart animation loaded!");
+                    // Nếu muốn thêm nhạc thì play ở đây
+                    // var audio = new Audio('renxi.mp3'); audio.play();
+                })
+                .catch(err => console.error("Lỗi nạp script:", err));
+        });
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.body.appendChild(script);
+            });
+        }
+        btnDecline.addEventListener('click', () => {
+            // 1. Dừng nhạc nền vui (nếu có)
+            // bgm.pause();
+
+            // 2. Ẩn toàn bộ giao diện hiện tại
+            document.getElementById('character-container').style.display = 'none';
+            document.getElementById('dialogue-box').style.display = 'none';
+            document.getElementById('heart-wrapper').style.display = 'none'; // Đề phòng
+
+            // 3. Tạo màn hình kết thúc buồn
+            const sadScreen = document.createElement('div');
+            sadScreen.style.position = 'fixed';
+            sadScreen.style.top = '0';
+            sadScreen.style.left = '0';
+            sadScreen.style.width = '100%';
+            sadScreen.style.height = '100%';
+            sadScreen.style.backgroundColor = '#000';
+            sadScreen.style.color = '#fff';
+            sadScreen.style.display = 'flex';
+            sadScreen.style.justifyContent = 'center';
+            sadScreen.style.alignItems = 'center';
+            sadScreen.style.fontSize = '30px';
+            sadScreen.style.flexDirection = 'column';
+            sadScreen.style.zIndex = '9999';
+
+            // Hiệu ứng chữ mờ dần hiện ra
+            sadScreen.innerHTML = `
+        <div style="opacity: 0; transition: opacity 3s;" id="sad-text">
+            💔 Tiếc quá, hẹn gặp lại bạn lần sau...
+        </div>
+    `;
+
+            document.body.appendChild(sadScreen);
+
+            // Kích hoạt hiệu ứng hiện chữ sau 100ms
+            setTimeout(() => {
+                document.getElementById('sad-text').style.opacity = '1';
+            }, 100);
+        });
+    </script>
+    <div id="heart-wrapper">
+        <canvas id="universe"></canvas>
+
+        <canvas id="pinkboard"></canvas>
+
+        <div id="corners-container">
+            <div class="corner top-left">
+                <div class="music-control" onclick="toggleMusic()">
+                    <div class="vinyl-record" id="record-spin">🎵</div>
+                    <div class="song-info">
+                        <span id="song-name">Đang phát: Love Song</span>
+                        <span id="music-status">Click để bật nhạc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="corner top-right">
+                <div class="love-timer">
+                    <span>Bên nhau được:</span>
+                    <div id="timer-display">00 : 00 : 00</div>
+                </div>
+            </div>
+            <div class="corner bottom-left">
+                <div class=" quote">
+                    "Yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng." - Antoine de Saint-Exupéry
+                </div>
+            </div>
+            <div class="corner bottom-right">
+                <a href="https://m.me/username-cua-crush" target="_blank" class="msg-btn">
+                    💌 Gửi lời nhắn
+                </a>
+            </div>
+        </div>
+        <audio id="bg-music" loop>
+            <source src="renxi.mp3" type="audio/mpeg">
+            Trình duyệt của bạn không hỗ trợ thẻ audio.
+        </audio>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+</body>
+
+</html>
