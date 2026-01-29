@@ -6,15 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
-
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@1,600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     </link>
 </head>
 
 <body>
-
+    <div class="bokeh"></div>
+    <div class="bokeh"></div>
+    <div class="bokeh"></div>
     <div id="character-container">
         <video id="character" muted loop>
             <source src="nhanvat_noi.mp4" type="video/mp4">
@@ -32,6 +35,30 @@
     </div>
 
     <script>
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤';
+
+            // Vị trí ngang ngẫu nhiên
+            heart.style.left = Math.random() * 100 + 'vw';
+
+            // Kích thước ngẫu nhiên (tạo chiều sâu)
+            const size = Math.random() * 15 + 10 + 'px';
+            heart.style.fontSize = size;
+
+            // Thời gian bay và độ mờ ngẫu nhiên
+            const duration = Math.random() * 5 + 10 + 's';
+            heart.style.animationDuration = duration;
+            heart.style.opacity = Math.random() * 0.4 + 0.2;
+
+            document.body.appendChild(heart);
+
+            // Xóa để tránh lag máy
+            setTimeout(() => {
+                heart.remove();
+            }, parseFloat(duration) * 1000);
+        }
         // Giữ nguyên Logic cũ của bạn
         const dialogues = [
             "Chào bạn! Rất vui vì bạn đã thay đổi bố cục giao diện.",
@@ -99,6 +126,7 @@
 
         window.onload = () => {
             typeWriter(dialogues[currentStep]);
+            setInterval(createFloatingHeart, 500);
         };
 
         btnAccept.addEventListener('click', () => {
@@ -136,6 +164,42 @@
                 document.body.appendChild(script);
             });
         }
+
+        function moveButton() {
+            // 1. Thiết lập khoảng cách an toàn (không cho nút dính sát mép màn hình)
+            const margin = 50;
+
+            // 2. Lấy kích thước thực tế của màn hình và của cái nút
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const buttonWidth = btnDecline.offsetWidth;
+            const buttonHeight = btnDecline.offsetHeight;
+
+            // 3. Tính toán phạm vi tối đa mà nút có thể nhảy tới
+            // (Chiều rộng màn hình - chiều rộng nút - khoảng cách an toàn)
+            const maxX = screenWidth - buttonWidth - margin;
+            const maxY = screenHeight - buttonHeight - margin;
+
+            // 4. Sinh tọa độ ngẫu nhiên trong phạm vi cho phép
+            // Math.max(margin, ...) để đảm bảo nút không nhảy về tọa độ < margin (mép trái/trên)
+            const randomX = Math.max(margin, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(margin, Math.floor(Math.random() * maxY));
+
+            // 5. Áp dụng vị trí mới
+            btnDecline.style.position = 'fixed'; // Dùng fixed để nó nhảy đè lên mọi thứ
+            btnDecline.style.left = randomX + 'px';
+            btnDecline.style.top = randomY + 'px';
+            btnDecline.style.transition = 'all 0.2s ease'; // Thêm chút hiệu ứng trượt cho mượt
+        }
+
+        // Kích hoạt khi di chuột qua (Dành cho máy tính)
+        btnDecline.addEventListener('mouseover', moveButton);
+
+        // Kích hoạt khi chạm vào (Dành cho điện thoại)
+        btnDecline.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Ngăn chặn hành động click mặc định khi chạm
+            moveButton();
+        });
         btnDecline.addEventListener('click', () => {
             // 1. Dừng nhạc nền vui (nếu có)
             // bgm.pause();

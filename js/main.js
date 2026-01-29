@@ -189,7 +189,15 @@ update();
 const bgMusic = document.getElementById("bg-music");
 const recordIcon = document.getElementById("record-spin");
 const musicStatus = document.getElementById("music-status");
-let isPlaying = false;
+let isPlaying = !bgMusic.paused;
+
+if (isPlaying) {
+  recordIcon.style.animationPlayState = "running";
+  musicStatus.innerText = "Đang phát...";
+} else {
+  recordIcon.style.animationPlayState = "paused";
+  musicStatus.innerText = "Đã tạm dừng";
+}
 
 function toggleMusic() {
   if (isPlaying) {
