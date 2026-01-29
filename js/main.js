@@ -187,7 +187,7 @@ function createCanvas(properties) {
 update();
 
 const bgMusic = document.getElementById("bg-music");
-const recordIcon = document.getElementById("record-icon");
+const recordIcon = document.getElementById("record-spin");
 const musicStatus = document.getElementById("music-status");
 let isPlaying = false;
 
