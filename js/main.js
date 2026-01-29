@@ -188,7 +188,7 @@ update();
 
 const bgMusic = document.getElementById("bg-music");
 const recordIcon = document.getElementById("record-icon");
-const musicIcon = document.getElementById("music-icon");
+const musicStatus = document.getElementById("music-status");
 let isPlaying = false;
 
 function toggleMusic() {
