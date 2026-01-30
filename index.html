@@ -143,32 +143,6 @@
             });
         };
 
-        btnAccept.addEventListener('click', () => {
-
-            const audio = document.getElementById('bg-music');
-            audio.play().catch(error => {
-                console.log("Lỗi autoplay (nếu có):", error);
-            });
-            // Ẩn giao diện cũ
-            document.getElementById('character-container').style.display = 'none';
-            document.getElementById('dialogue-box').style.display = 'none';
-
-            // Hiện khung chứa trái tim
-            const heartWrapper = document.getElementById('heart-wrapper');
-            heartWrapper.style.display = 'block';
-
-            // Nạp lần lượt các file JS của hiệu ứng trái tim
-            // Lưu ý: Phải nạp đúng thứ tự
-            loadScript('js/universe.js') // Hiệu ứng sao
-                .then(() => loadScript('js/particle.js')) // Hiệu ứng trái tim chính
-                .then(() => loadScript('js/main.js')) // Hiệu ứng hạt bay thêm
-                .then(() => {
-                    console.log("Heart animation loaded!");
-                    // Nếu muốn thêm nhạc thì play ở đây
-                    // var audio = new Audio('renxi.mp3'); audio.play();
-                })
-                .catch(err => console.error("Lỗi nạp script:", err));
-        });
         function loadScript(src) {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
@@ -226,6 +200,9 @@
             bgm.pause();
             const audio = document.getElementById('bg-music');
             const voiceAccept = document.getElementById('voice-accept');
+            const bgMusics = document.getElementById('bg-musics');
+            bgMusics.pause();
+            bgMusics.currentTime = 0;
 
             voiceAccept.play().catch(error => {
                 console.log("Lỗi phát âm thanh chấp nhận:", error);
