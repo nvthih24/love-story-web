@@ -29,8 +29,8 @@
         <div id="text"></div>
         <div class="controls">
             <button id="btn-next">Tiếp tục</button>
-            <button id="btn-decline">Từ chối</button>
-            <button id="btn-accept">Đồng ý</button>
+            <button id="btn-decline">Không</button>
+            <button id="btn-accept">Có</button>
         </div>
     </div>
 
@@ -62,10 +62,10 @@
         // Giữ nguyên Logic cũ của bạn
         const dialogues = [
             "Xin chào em! Người con gái tôi thương, ngày hôm nay của em thế nào? Có vui không, có buồn không? Anh thì đang rất hồi hộp và hạnh phúc. Vì sao ư? Vì…",
-            // "Ban đầu anh cũng ngại trò chuyện với người lạ, nhưng mà thấy em hòa đồng tương tác với anh cũng như mọi người, anh thầm nghĩ: “ Bé này nói chuyện dễ thương vậy ta hay là trêu xíu nhỉ “. Em có nhớ lần đầu tiên hai ta nhắn tin không, anh bị người đẹp sấy vì tag em miết ấy, lúc đó anh cũng ấy nấy dữ lắm, kiểu này hơi bị ham vui quá haha. Sau đó là một vài chủ đề nói chuyện với nhau, những câu bông đùa những lần chia sẽ kỉ niệm, rồi dần dần…",
-            // "Anh nhận ra đây không chỉ là tình cảm bạn bè thông thường nữa. Mỗi lần trò chuyện với em mà mỗi lần anh cảm thấy lòng ngực mình nó rộn ràng, lâu lắm rồi anh chưa chờ đợi, trông ngóng tin nhắn của một ai đến vậy. Những lần tâm sự, những thứ tưởng chừng như nhỏ nhặt mà nó mang lại cho anh một cảm xúc hạnh phúc khó tả.",
-            // "Và rồi một ngày đầu năm tuyệt vời, chuyện gì đến nó cũng đến. Trước đêm đó anh đã uống thật say rồi suy nghĩ thật kĩ “Không! Không thể chờ được nữa! Ngày mai ngay khi tỉnh giấc mình phải nói“. Thế là sáng hôm sau anh lấy dũng khí để lái câu chuyện vào hướng để anh tỏ tình. Anh dự là một lời tỏ tình chính thức  mà sao nó hơi vòng vo một tí dù sao thì vẫn đạt được mục đích ban đầu. Lúc đầu thấy em suy nghĩ hơi lâu và kiểu như muốn từ chối ấy anh sắp suy sụp đến nơi rồi nhưng mà anh đã nhẩy cẳng lên khi em nói cho anh cơ hội để tìm hiểu anh thật sự thật sự hạnh phúc.",
-            // "Từ đó đến nay cũng đã tròn 1 tháng hai ta chính thức tìm hiểu. Trải qua cũng đủ loại cảm xúc rồi, vui có, buồn có, giận có, khó chịu có, buồn có, hạnh phúc có. Anh xin phép được nói lời cảm ơn và xin lỗi đến em. Anh cảm ơn vì em đã đến bên anh và chỉ dạy anh cách để yêu lấy một người, dạy anh trưởng thành, dạy anh biết đâu là nhường nhịn, dạy anh hãy tập trung vào hiện tại đừng lo lắng vào tương lai xa vì tương lai đó là do chính tay hai ta tạo nên. Anh xin lỗi vì những lần mắc lỗi khiến em cảm thấy tủi thân, những lần ham chơi bỏ bê em một mình, những lần để cảm xúc lấn ác tâm trí khiến em cảm giác không an tâm khi ở bên anh. Một lần nữa anh muốn cảm ơn em vì đã thấu hiếu, tha thứ cho sự trẻ con của anh, cảm ơn em vì đã cho anh cơ hội để dỗ dành em, cảm ơn em vì tất cả. Anh yêu em ❤ !",
+            "Ban đầu anh cũng ngại trò chuyện với người lạ, nhưng mà thấy em hòa đồng tương tác với anh cũng như mọi người, anh thầm nghĩ: “ Bé này nói chuyện dễ thương vậy ta hay là trêu xíu nhỉ “. Em có nhớ lần đầu tiên hai ta nhắn tin không, anh bị người đẹp sấy vì tag em miết ấy, lúc đó anh cũng ấy nấy dữ lắm, kiểu này hơi bị ham vui quá haha. Sau đó là một vài chủ đề nói chuyện với nhau, những câu bông đùa những lần chia sẽ kỉ niệm, rồi dần dần…",
+            "Anh nhận ra đây không chỉ là tình cảm bạn bè thông thường nữa. Mỗi lần trò chuyện với em mà mỗi lần anh cảm thấy lòng ngực mình nó rộn ràng, lâu lắm rồi anh chưa chờ đợi, trông ngóng tin nhắn của một ai đến vậy. Những lần tâm sự, những thứ tưởng chừng như nhỏ nhặt mà nó mang lại cho anh một cảm xúc hạnh phúc khó tả.",
+            "Và rồi một ngày đầu năm tuyệt vời, chuyện gì đến nó cũng đến. Trước đêm đó anh đã uống thật say rồi suy nghĩ thật kĩ “Không! Không thể chờ được nữa! Ngày mai ngay khi tỉnh giấc mình phải nói“. Thế là sáng hôm sau anh lấy dũng khí để lái câu chuyện vào hướng để anh tỏ tình. Anh dự là một lời tỏ tình chính thức  mà sao nó hơi vòng vo một tí dù sao thì vẫn đạt được mục đích ban đầu. Lúc đầu thấy em suy nghĩ hơi lâu và kiểu như muốn từ chối ấy anh sắp suy sụp đến nơi rồi nhưng mà anh đã nhẩy cẳng lên khi em nói cho anh cơ hội để tìm hiểu anh thật sự thật sự hạnh phúc.",
+            "Từ đó đến nay cũng đã tròn 1 tháng hai ta chính thức tìm hiểu. Trải qua cũng đủ loại cảm xúc rồi, vui có, buồn có, giận có, khó chịu có, buồn có, hạnh phúc có. Anh xin phép được nói lời cảm ơn và xin lỗi đến em. Anh cảm ơn vì em đã đến bên anh và chỉ dạy anh cách để yêu lấy một người, dạy anh trưởng thành, dạy anh biết đâu là nhường nhịn, dạy anh hãy tập trung vào hiện tại đừng lo lắng vào tương lai xa vì tương lai đó là do chính tay hai ta tạo nên. Anh xin lỗi vì những lần mắc lỗi khiến em cảm thấy tủi thân, những lần ham chơi bỏ bê em một mình, những lần để cảm xúc lấn ác tâm trí khiến em cảm giác không an tâm khi ở bên anh. Một lần nữa anh muốn cảm ơn em vì đã thấu hiếu, tha thứ cho sự trẻ con của anh, cảm ơn em vì đã cho anh cơ hội để dỗ dành em, cảm ơn em vì tất cả. Anh yêu em ❤ !",
             "Dài dòng cũng đủ rồi, hôm nay cũng là ngày tròn 1 tháng anh được phép tìm hiểu Vân, anh chỉ muốn nói là “Anh Yêu Em ❤ ! Em có thể cho anh một cơ hội để cùng em sánh bước, cùng em trãi qua vô vàng cảm xúc, cùng nhau tiến về tương lai mà ở đó anh và em cùng nắm tay nhau, cùng nhau trò chuyện, cùng nhau tâm sự, cùng cười nói, cùng buồn khóc, nói chung là anh muốn được trãi qua mọi thứ cùng em. Có được không em?”"
         ];
 
@@ -128,6 +128,19 @@
         window.onload = () => {
             typeWriter(dialogues[currentStep]);
             setInterval(createFloatingHeart, 500);
+
+            const bgMusic = document.getElementById('bg-musics');
+            bgMusic.volume = 0.5; // Đặt âm lượng vừa phải (0.5 là 50%)
+
+            bgMusic.play().catch(error => {
+                // Trình duyệt thường chặn autoplay có âm thanh
+                console.log("Trình duyệt chặn nhạc tự động. Nhạc sẽ phát sau khi ông click bất kỳ đâu.");
+
+                // Mẹo: Tự động phát nhạc ngay khi người dùng click lần đầu tiên vào bất kỳ đâu trên màn hình
+                document.addEventListener('click', () => {
+                    bgMusic.play();
+                }, { once: true }); // { once: true } để chỉ chạy lệnh này 1 lần duy nhất
+            });
         };
 
         btnAccept.addEventListener('click', () => {
@@ -351,6 +364,10 @@
         </audio>
         <audio id="voice-accept">
             <source src="voice Accept.m4a" type="audio/x-m4a">
+        </audio>
+        <audio id="bg-musics" loop autoplay>
+            <source src="Vết Mưa (Piano Cover).mp3" type="audio/mp3">
+            Trình duyệt của bạn không hỗ trợ thẻ audio.
         </audio>
     </div>
 
